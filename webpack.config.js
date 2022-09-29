@@ -7,6 +7,9 @@ const config = {
         path: path.join(__dirname, 'dist', 'frontend', 'js'),
         libraryTarget: 'var',
         library: 'chessington'
+    },
+    resolve: {
+        extensions: ['.js', '.ts']
     }
 };
 

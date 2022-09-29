@@ -6,7 +6,8 @@
   "scripts": {
     "clean": "del-cli dist/**/* logs/*",
     "bundle": "webpack",
-    "build": "npm run clean && babel ./src --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log --copy-files && npm run bundle",
+    "check-types": "tsc",
+    "build": "npm run check-types && npm run clean && babel ./src --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log --copy-files && npm run bundle",
     "start": "npm run build && node dist/index.js",
     "test": "mocha --compilers js:@babel/register \"./tests/**/*.spec.js\""
   },
@@ -15,10 +16,14 @@
   "devDependencies": {
     "@babel/cli": "^7.0.0",
     "@babel/core": "^7.0.0",
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
+    "@babel/plugin-proposal-object-rest-spread": "^7.18.9",
     "@babel/preset-env": "^7.0.0",
+    "@babel/preset-typescript": "^7.18.6",
     "chai": "^4.1.2",
     "del-cli": "^1.1.0",
     "mocha": "^4.0.1",
+    "typescript": "^4.8.4",
     "webpack": "^3.6.0"
   },
   "dependencies": {
