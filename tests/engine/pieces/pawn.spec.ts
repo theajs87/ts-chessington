@@ -37,6 +37,7 @@ describe('Pawn', () => {
             board.setPiece(Square.at(7, 3), pawn);
 
             const moves = pawn.getAvailableMoves(board);
+            console.log(moves);
 
             moves.should.be.empty;
         });

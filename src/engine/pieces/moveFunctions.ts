@@ -25,19 +25,20 @@ export function diagonalMoves(board: Board, pos: Square) {
 }
 
 function checkDirection(board: Board, pos: Square, rowDirection: number, colDirection: number) {
-    let currentRow: number = pos.row + rowDirection;
-    let currentCol: number = pos.col + colDirection;
+    let currentSquare = new Square(pos.row + rowDirection, pos.col + colDirection);
     let moves: Square[] = [];
 
-    while (currentRow >= 0 && currentCol >= 0 && currentRow < GameSettings.BOARD_SIZE && currentCol < GameSettings.BOARD_SIZE) {
-        let square: Square = new Square(currentRow, currentCol);
-        if (board.getPiece(square) !== undefined) {
+    while (checkSquareWithinBounds(currentSquare)) {
+        if (board.getPiece(currentSquare) !== undefined) {
             break;
         }
-        moves.push(square);
-        currentRow += rowDirection;
-        currentCol += colDirection;
+        moves.push(currentSquare);
+        currentSquare = new Square(currentSquare.row + rowDirection, currentSquare.col + colDirection);
     }
 
     return moves;
+}
+
+export function checkSquareWithinBounds(square: Square) {
+    return square.row >= 0 && square.col >= 0 && square.row < GameSettings.BOARD_SIZE && square.col < GameSettings.BOARD_SIZE
 }

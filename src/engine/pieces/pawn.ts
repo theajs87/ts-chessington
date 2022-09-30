@@ -2,6 +2,7 @@ import Piece from './piece';
 import Player from '../player';
 import Board from '../board';
 import Square from '../square';
+import { checkSquareWithinBounds } from './moveFunctions';
 
 const LONG_MOVE_MULTIPLIER: number = 2;
 
@@ -22,9 +23,9 @@ export default class Pawn extends Piece {
         let shortMove = new Square(pos.row + forwards, pos.col);
         let longMove = new Square(pos.row + LONG_MOVE_MULTIPLIER * forwards, pos.col);
 
-        if (board.getPiece(shortMove) === undefined) {
+        if (checkSquareWithinBounds(shortMove) && board.getPiece(shortMove) === undefined) {
             moves.push(shortMove);
-            if (!hasHadFirstMove && board.getPiece(longMove) === undefined) {
+            if (!hasHadFirstMove && checkSquareWithinBounds(longMove) && board.getPiece(longMove) === undefined) {
                 moves.push(longMove);
             }
         }
