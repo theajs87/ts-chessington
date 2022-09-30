@@ -1,13 +1,19 @@
+import Player from '../player';
+import Board from '../board';
+import Square from '../square';
+
 export default class Piece {
-    constructor(player) {
+    public player: Player;
+
+    public constructor(player: Player) {
         this.player = player;
     }
 
-    getAvailableMoves(board) {
+    public getAvailableMoves(board: Board) {
         throw new Error('This method must be implemented, and return a list of available moves');
     }
 
-    moveTo(board, newSquare) {
+    public moveTo(board: Board, newSquare: Square) {
         const currentSquare = board.findPiece(this);
         board.movePiece(currentSquare, newSquare);
     }

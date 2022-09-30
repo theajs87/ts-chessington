@@ -8,7 +8,7 @@ describe('Board', () => {
 
     describe('pawns', () => {
 
-        let board;
+        let board : Board;
         beforeEach(() => { // Common code executed before each test.
             board = new Board();
         });
@@ -22,7 +22,8 @@ describe('Board', () => {
             board.setPiece(square, pawn);
 
             // Assert
-            board.getPiece(square).should.equal(pawn); // Object equality: same object reference
+            const piece = board.getPiece(square);
+            pawn.should.equal(piece); // Object equality: same object reference
         });
 
         it('can be found on the board', () => {

@@ -1,6 +1,6 @@
-const Player = Object.freeze({
-    WHITE: Symbol('white'),
-    BLACK: Symbol('black')
-});
+enum Player {
+    WHITE,
+    BLACK
+}
 
 export default Player;
