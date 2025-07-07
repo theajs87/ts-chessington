@@ -26,7 +26,7 @@ export default class Knight extends Piece {
     private getLMoves(board: Board, pos: Square, rowDirection: number, colDirection: number) {
         let move: Square = new Square(pos.row + rowDirection, pos.col + colDirection);
         let otherPiece = board.getPiece(move);
-        if (checkSquareWithinBounds(move) && (otherPiece === undefined || this.canTakePiece(otherPiece))) {
+        if (this.checkValidityOfMove(board, move)) {
             return [move];
         }
         return [];

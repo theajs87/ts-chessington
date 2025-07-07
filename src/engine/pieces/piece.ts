@@ -64,5 +64,9 @@ export default class Piece {
 
         return moves;
     }
-    
+
+    protected checkValidityOfMove(board: Board, move: Square) {
+        let otherPiece = board.getPiece(move);
+        return checkSquareWithinBounds(move) && (otherPiece === undefined || this.canTakePiece(otherPiece))
+    }
 }
