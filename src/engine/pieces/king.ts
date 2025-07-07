@@ -17,7 +17,9 @@ export default class King extends Piece {
         for (let i = -1; i <= 1; i++) {
             for (let j = -1; j <= 1; j++) {
                 let move = new Square(pos.row + i, pos.col + j);
-                if (checkSquareWithinBounds(move) && !pos.equals(move)) {
+                let otherPiece = board.getPiece(move);
+
+                if (checkSquareWithinBounds(move) && !pos.equals(move) && (otherPiece === undefined || this.canTakePiece(otherPiece))) {
                     moves.push(move);
                 }
             }
