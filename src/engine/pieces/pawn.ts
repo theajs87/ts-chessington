@@ -16,10 +16,17 @@ export default class Pawn extends Piece {
 
         let hasHadFirstMove: Boolean = !(pos.row == this.startingRow);
         let forwards = this.player === Player.WHITE ? 1 : -1
-        let moves: Square[] = [new Square(pos.row + forwards, pos.col)];
-        if (!hasHadFirstMove) {
-            moves.push(new Square(pos.row + 2 * forwards, pos.col));
+        let moves: Square[] = [];
+        let shortMove = new Square(pos.row + forwards, pos.col);
+        let longMove = new Square(pos.row + 2 * forwards, pos.col);
+
+        if (board.getPiece(shortMove) === undefined) {
+            moves.push(shortMove);
+            if (!hasHadFirstMove && board.getPiece(longMove) === undefined) {
+                moves.push(longMove);
+            }
         }
+
         return moves;
     }
 }
