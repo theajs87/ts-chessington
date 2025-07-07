@@ -23,10 +23,20 @@ export default class Pawn extends Piece {
         let shortMove = new Square(pos.row + forwards, pos.col);
         let longMove = new Square(pos.row + LONG_MOVE_MULTIPLIER * forwards, pos.col);
 
-        if (checkSquareWithinBounds(shortMove) && board.getPiece(shortMove) === undefined) {
-            moves.push(shortMove);
-            if (!hasHadFirstMove && checkSquareWithinBounds(longMove) && board.getPiece(longMove) === undefined) {
-                moves.push(longMove);
+        if (checkSquareWithinBounds(shortMove)) {
+            if (board.getPiece(shortMove) === undefined) {
+                moves.push(shortMove);
+                if (!hasHadFirstMove && checkSquareWithinBounds(longMove) && board.getPiece(longMove) === undefined) {
+                    moves.push(longMove);
+                }
+            }
+            
+            for (let i = -1; i <= 1; i += 2) {
+                let diagonalMove = new Square(shortMove.row, pos.col + i);
+                let otherPiece = board.getPiece(diagonalMove);
+                if (otherPiece !== undefined && this.canTakePiece(otherPiece)) {
+                    moves.push(diagonalMove);
+                }
             }
         }
 
