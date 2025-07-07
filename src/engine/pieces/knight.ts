@@ -16,11 +16,13 @@ export default class Knight extends Piece {
         for (let i = -1; i <= 1; i += 2) {
             for (let j = -1; j <= 1; j += 2) {
                 let firstMove: Square = new Square(pos.row + 2 * i, pos.col + j)
-                if (checkSquareWithinBounds(firstMove)) {
+                let otherPiece1 = board.getPiece(firstMove);
+                if (checkSquareWithinBounds(firstMove) && (otherPiece1 === undefined || this.canTakePiece(otherPiece1))) {
                     moves.push(firstMove);
                 }
                 let secondMove: Square = new Square(pos.row + i, pos.col + 2 * j)
-                if (checkSquareWithinBounds(secondMove)) {
+                let otherPiece2 = board.getPiece(secondMove);
+                if (checkSquareWithinBounds(secondMove) && (otherPiece2 === undefined || this.canTakePiece(otherPiece2))) {
                     moves.push(secondMove);
                 }
             }

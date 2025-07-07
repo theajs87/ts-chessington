@@ -28,7 +28,7 @@ export default class Piece {
         while (checkSquareWithinBounds(currentSquare)) {
             let otherPiece = board.getPiece(currentSquare);
             if (otherPiece !== undefined) {
-                if (otherPiece.player !== this.player && !otherPiece.isKing) {
+                if (this.canTakePiece(otherPiece)) {
                     moves.push(currentSquare);
                 }
                 break;
@@ -38,6 +38,10 @@ export default class Piece {
         }
 
         return moves;
+    }
+
+    protected canTakePiece(otherPiece: Piece) {
+        return otherPiece.player !== this.player && !otherPiece.isKing
     }
 
     protected lateralMoves(board: Board, pos: Square) {

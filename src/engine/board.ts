@@ -17,7 +17,7 @@ export default class Board {
     }
 
     public getPiece(square: Square) {
-        return this.board[square.row][square.col];
+        return this.board[square.row]?.[square.col];
     }
 
     public findPiece(pieceToFind: Piece) {
