@@ -3,6 +3,8 @@ import Player from '../player';
 import Board from '../board';
 import Square from '../square';
 
+const LONG_MOVE_MULTIPLIER: number = 2;
+
 export default class Pawn extends Piece {
     private startingRow: number;
 
@@ -18,7 +20,7 @@ export default class Pawn extends Piece {
         let forwards = this.player === Player.WHITE ? 1 : -1
         let moves: Square[] = [];
         let shortMove = new Square(pos.row + forwards, pos.col);
-        let longMove = new Square(pos.row + 2 * forwards, pos.col);
+        let longMove = new Square(pos.row + LONG_MOVE_MULTIPLIER * forwards, pos.col);
 
         if (board.getPiece(shortMove) === undefined) {
             moves.push(shortMove);
