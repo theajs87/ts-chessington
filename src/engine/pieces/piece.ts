@@ -1,12 +1,15 @@
 import Player from '../player';
 import Board from '../board';
 import Square from '../square';
+import { checkSquareWithinBounds } from './moveFunctions';
 
 export default class Piece {
     public player: Player;
+    public isKing: Boolean;
 
     public constructor(player: Player) {
         this.player = player;
+        this.isKing = false;
     }
 
     public getAvailableMoves(board: Board) {
@@ -17,4 +20,45 @@ export default class Piece {
         const currentSquare = board.findPiece(this);
         board.movePiece(currentSquare, newSquare);
     }
+
+    private checkDirection(board: Board, pos: Square, rowDirection: number, colDirection: number) {
+        let currentSquare = new Square(pos.row + rowDirection, pos.col + colDirection);
+        let moves: Square[] = [];
+
+        while (checkSquareWithinBounds(currentSquare)) {
+            let otherPiece = board.getPiece(currentSquare);
+            if (otherPiece !== undefined) {
+                if (otherPiece.player !== this.player && !otherPiece.isKing) {
+                    moves.push(currentSquare);
+                }
+                break;
+            }
+            moves.push(currentSquare);
+            currentSquare = new Square(currentSquare.row + rowDirection, currentSquare.col + colDirection);
+        }
+
+        return moves;
+    }
+
+    protected lateralMoves(board: Board, pos: Square) {
+        let moves: Square[] = [];
+
+        moves = moves.concat(this.checkDirection(board, pos, -1, 0));
+        moves = moves.concat(this.checkDirection(board, pos, 1, 0));
+        moves = moves.concat(this.checkDirection(board, pos, 0, -1));
+        moves = moves.concat(this.checkDirection(board, pos, 0, 1));
+        return moves;
+    }
+
+    protected diagonalMoves(board: Board, pos: Square) {
+        let moves: Square[] = [];
+
+        moves = moves.concat(this.checkDirection(board, pos, 1, 1));
+        moves = moves.concat(this.checkDirection(board, pos, 1, -1));
+        moves = moves.concat(this.checkDirection(board, pos, -1, 1));
+        moves = moves.concat(this.checkDirection(board, pos, -1, -1));
+
+        return moves;
+    }
+
 }

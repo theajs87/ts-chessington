@@ -1,7 +1,6 @@
 import Piece from './piece';
 import Player from '../player';
 import Board from '../board';
-import { lateralMoves } from './moveFunctions';
 
 export default class Rook extends Piece {
     public constructor(player: Player) {
@@ -10,6 +9,6 @@ export default class Rook extends Piece {
 
     public getAvailableMoves(board: Board) {
         let pos = board.findPiece(this);
-        return lateralMoves(board, pos);
+        return this.lateralMoves(board, pos);
     }
 }

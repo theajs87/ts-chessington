@@ -7,6 +7,7 @@ import { checkSquareWithinBounds } from './moveFunctions';
 export default class King extends Piece {
     public constructor(player: Player) {
         super(player);
+        this.isKing = true;
     }
 
     public getAvailableMoves(board: Board) {
