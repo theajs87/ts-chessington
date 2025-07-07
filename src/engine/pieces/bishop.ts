@@ -13,13 +13,13 @@ export default class Bishop extends Piece {
         let pos = board.findPiece(this);
         let moves: Square[] = [];
         
-        for (let i = 1; (i + pos.row < GameSettings.BOARD_SIZE) && (i + pos.col < GameSettings.BOARD_SIZE); i++) {
+        for (let i = 1; (pos.row + i < GameSettings.BOARD_SIZE) && (pos.col + i < GameSettings.BOARD_SIZE); i++) {
             moves.push(new Square(pos.row + i, pos.col + i));
         }
-        for (let i = 1; (i + pos.row < GameSettings.BOARD_SIZE) && (pos.col - i >= 0); i++) {
+        for (let i = 1; (pos.row + i < GameSettings.BOARD_SIZE) && (pos.col - i >= 0); i++) {
             moves.push(new Square(pos.row + i, pos.col - i));
         }
-        for (let i = 1; (pos.row - i >= 0) && (i + pos.col < GameSettings.BOARD_SIZE); i++) {
+        for (let i = 1; (pos.row - i >= 0) && (pos.col + i < GameSettings.BOARD_SIZE); i++) {
             moves.push(new Square(pos.row - i, pos.col + i));
         }
         for (let i = 1; (pos.row - i >= 0) && (pos.col - i >= 0); i++) {
