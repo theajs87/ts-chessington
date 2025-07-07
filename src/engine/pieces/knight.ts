@@ -11,23 +11,24 @@ export default class Knight extends Piece {
 
     public getAvailableMoves(board: Board) {
         let pos = board.findPiece(this);
-        let moves = [];
+        let moves: Square[] = [];
 
         for (let i = -1; i <= 1; i += 2) {
             for (let j = -1; j <= 1; j += 2) {
-                let firstMove: Square = new Square(pos.row + 2 * i, pos.col + j)
-                let otherPiece1 = board.getPiece(firstMove);
-                if (checkSquareWithinBounds(firstMove) && (otherPiece1 === undefined || this.canTakePiece(otherPiece1))) {
-                    moves.push(firstMove);
-                }
-                let secondMove: Square = new Square(pos.row + i, pos.col + 2 * j)
-                let otherPiece2 = board.getPiece(secondMove);
-                if (checkSquareWithinBounds(secondMove) && (otherPiece2 === undefined || this.canTakePiece(otherPiece2))) {
-                    moves.push(secondMove);
-                }
+                moves = moves.concat(this.getLMoves(board, pos, i, j*2));
+                moves = moves.concat(this.getLMoves(board, pos, i*2, j));
             }
         }
 
         return moves;
+    }
+
+    private getLMoves(board: Board, pos: Square, rowDirection: number, colDirection: number) {
+        let move: Square = new Square(pos.row + rowDirection, pos.col + colDirection);
+        let otherPiece = board.getPiece(move);
+        if (checkSquareWithinBounds(move) && (otherPiece === undefined || this.canTakePiece(otherPiece))) {
+            return [move];
+        }
+        return [];
     }
 }

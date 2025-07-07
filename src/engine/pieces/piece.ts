@@ -64,5 +64,5 @@ export default class Piece {
 
         return moves;
     }
-
+    
 }
