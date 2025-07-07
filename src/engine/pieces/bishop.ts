@@ -11,6 +11,6 @@ export default class Bishop extends Piece {
     public getAvailableMoves(board: Board) {
         let pos = board.findPiece(this);
         
-        return diagonalMoves(pos);
+        return diagonalMoves(board, pos);
     }
 }
