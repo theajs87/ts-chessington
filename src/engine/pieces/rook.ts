@@ -14,10 +14,14 @@ export default class Rook extends Piece {
         let moves: Square[] = [];
     
         for (let i = 0; i < GameSettings.BOARD_SIZE; i++) {
-            moves.push(new Square(pos.row, i));
-            moves.push(new Square(i, pos.col));
+            if (i !== pos.col) {
+                moves.push(new Square(pos.row, i));
+            }
+            if (i !== pos.row) {
+                moves.push(new Square(i, pos.col));
+            }
         }
 
-        return moves.filter((square) => !((square.row === pos.row) && (square.col === pos.col)));
+        return moves;
     }
 }
