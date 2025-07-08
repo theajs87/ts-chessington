@@ -2,14 +2,17 @@ import Player from './player';
 import GameSettings from './gameSettings';
 import Square from './square';
 import Piece from './pieces/piece';
+import Pawn from './pieces/pawn'
 
 export default class Board {
     public currentPlayer: Player;
+    public lastLongMovePawn: Pawn | undefined;
     private readonly board: (Piece | undefined)[][];
 
     public constructor(currentPlayer?: Player) {
         this.currentPlayer = currentPlayer ? currentPlayer : Player.WHITE;
         this.board = this.createBoard();
+        this.lastLongMovePawn = undefined;
     }
 
     public setPiece(square: Square, piece: Piece | undefined) {
@@ -37,6 +40,7 @@ export default class Board {
             this.setPiece(toSquare, movingPiece);
             this.setPiece(fromSquare, undefined);
             this.currentPlayer = (this.currentPlayer === Player.WHITE ? Player.BLACK : Player.WHITE);
+            this.lastLongMovePawn = undefined;
         }
     }
 

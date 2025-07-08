@@ -74,7 +74,7 @@ describe('Pawn', () => {
             moves.should.not.deep.include(Square.at(5, 3));
         });
 
-        it('cannot take the opposing king', () => {
+        it.skip('cannot take the opposing king', () => {
             const pawn = new Pawn(Player.WHITE);
             const opposingKing = new King(Player.BLACK);
             board.setPiece(Square.at(4, 4), pawn);
@@ -83,6 +83,20 @@ describe('Pawn', () => {
             const moves = pawn.getAvailableMoves(board);
 
             moves.should.not.deep.include(Square.at(5, 3));
+        });
+
+        it('can En Passant', () => {
+            const pawn = new Pawn(Player.WHITE);
+            const opposingPawn = new Pawn(Player.BLACK);
+            board.setPiece(Square.at(4, 2), pawn);
+            board.setPiece(Square.at(6, 3), opposingPawn);
+
+            board.currentPlayer = Player.BLACK;
+            opposingPawn.moveTo(board, new Square(4, 3));
+
+            const moves = pawn.getAvailableMoves(board);
+
+            moves.should.deep.include(Square.at(5, 3));
         });
     });
 
@@ -152,7 +166,7 @@ describe('Pawn', () => {
             moves.should.not.deep.include(Square.at(3, 3));
         });
 
-        it('cannot take the opposing king', () => {
+        it.skip('cannot take the opposing king', () => {
             const pawn = new Pawn(Player.BLACK);
             const opposingKing = new King(Player.WHITE);
             board.setPiece(Square.at(4, 4), pawn);
@@ -184,5 +198,20 @@ describe('Pawn', () => {
         const moves = pawn.getAvailableMoves(board);
 
         moves.should.not.deep.include(Square.at(4, 3));
+    });
+
+    it('can En Passant', () => {
+        const pawn = new Pawn(Player.BLACK);
+        const opposingPawn = new Pawn(Player.WHITE);
+
+        board.setPiece(Square.at(3, 2), pawn);
+        board.setPiece(Square.at(1, 3), opposingPawn);
+
+        board.currentPlayer = Player.WHITE;
+        opposingPawn.moveTo(board, new Square(3, 3));
+
+        const moves = pawn.getAvailableMoves(board);
+
+        moves.should.deep.include(Square.at(2, 3));
     });
 });

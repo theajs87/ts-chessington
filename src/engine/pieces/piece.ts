@@ -5,11 +5,9 @@ import { checkSquareWithinBounds } from './moveFunctions';
 
 export default class Piece {
     public player: Player;
-    public isKing: Boolean;
 
     public constructor(player: Player) {
         this.player = player;
-        this.isKing = false;
     }
 
     public getAvailableMoves(board: Board) {
@@ -41,7 +39,7 @@ export default class Piece {
     }
 
     protected canTakePiece(otherPiece: Piece) {
-        return otherPiece.player !== this.player && !otherPiece.isKing
+        return otherPiece.player !== this.player
     }
 
     protected lateralMoves(board: Board, pos: Square) {
@@ -69,4 +67,5 @@ export default class Piece {
         let otherPiece = board.getPiece(move);
         return checkSquareWithinBounds(move) && (otherPiece === undefined || this.canTakePiece(otherPiece))
     }
+
 }

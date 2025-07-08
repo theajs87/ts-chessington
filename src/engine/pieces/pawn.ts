@@ -34,7 +34,7 @@ export default class Pawn extends Piece {
             
             moves = moves.concat(this.checkDiagonals(board, pos))
         }
-
+        moves = moves.concat(this.checkEnPassant(board, pos))
         return moves;
     }
 
@@ -48,5 +48,28 @@ export default class Pawn extends Piece {
             }
         }
         return moves
+    }
+
+    private checkEnPassant(board: Board, pos: Square) {
+        let toEnPassant = board.lastLongMovePawn;
+        if (toEnPassant !== undefined) {
+            let enPassantPos = board.findPiece(toEnPassant);
+            if (this.canTakePiece(toEnPassant) && enPassantPos.row === pos.row && Math.abs(enPassantPos.col - pos.col) === 1) {
+                return [new Square(enPassantPos.row + this.forwards, enPassantPos.col)];
+            }
+        }
+        return [];
+    }
+
+    override moveTo(board: Board, newSquare: Square) {
+        let originalPos = board.findPiece(this);
+        let opposingPiece = board.getPiece(newSquare);
+        super.moveTo(board, newSquare);
+        if (Math.abs(originalPos.row - newSquare.row) === 2) {
+            board.lastLongMovePawn = this;
+        }
+        if (opposingPiece === undefined && newSquare.col !== originalPos.col) {
+            board.setPiece(new Square(newSquare.row - this.forwards, newSquare.col), undefined);
+        }
     }
 }

@@ -2,12 +2,10 @@ import Piece from './piece';
 import Player from '../player';
 import Board from '../board';
 import Square from '../square';
-import { checkSquareWithinBounds } from './moveFunctions';
 
 export default class King extends Piece {
     public constructor(player: Player) {
         super(player);
-        this.isKing = true;
     }
 
     public getAvailableMoves(board: Board) {
