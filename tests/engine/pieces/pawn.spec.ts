@@ -4,6 +4,7 @@ import Player from '../../../src/engine/player';
 import Square from '../../../src/engine/square';
 import Rook from '../../../src/engine/pieces/rook';
 import King from '../../../src/engine/pieces/king';
+import { expect } from 'chai';
 
 describe('Pawn', () => {
 
@@ -97,6 +98,18 @@ describe('Pawn', () => {
             const moves = pawn.getAvailableMoves(board);
 
             moves.should.deep.include(Square.at(5, 3));
+        });
+
+        it('can promote', () => {
+            const pawn = new Pawn(Player.WHITE);
+            board.setPiece(Square.at(6, 2), pawn);
+            
+            let newSquare = new Square(7, 2);
+            pawn.moveTo(board, newSquare);
+
+            let newPiece = board.getPiece(newSquare);
+            expect(newPiece).to.not.be.undefined;
+            expect(newPiece).not.instanceOf(Pawn);
         });
     });
 
@@ -213,5 +226,17 @@ describe('Pawn', () => {
         const moves = pawn.getAvailableMoves(board);
 
         moves.should.deep.include(Square.at(2, 3));
+    });
+
+    it('can promote', () => {
+        const pawn = new Pawn(Player.BLACK);
+        board.setPiece(Square.at(1, 2), pawn);
+        
+        let newSquare = new Square(0, 2);
+        pawn.moveTo(board, newSquare);
+
+        let newPiece = board.getPiece(newSquare);
+        expect(newPiece).to.not.be.undefined;
+        expect(newPiece).not.instanceOf(Pawn);
     });
 });

@@ -3,17 +3,24 @@ import Player from '../player';
 import Board from '../board';
 import Square from '../square';
 import { checkSquareWithinBounds } from './moveFunctions';
+import GameSettings from '../gameSettings';
+import Queen from './queen';
+import Bishop from './bishop';
+import Rook from './rook';
+import Knight from './knight';
 
 const LONG_MOVE_MULTIPLIER: number = 2;
 
 export default class Pawn extends Piece {
     private startingRow: number;
     private forwards: number;
+    private endRow: number;
 
     public constructor(player: Player) {
         super(player);
-        this.startingRow = this.player === Player.WHITE ? 1 : 6;
+        this.startingRow = this.player === Player.WHITE ? 1 : GameSettings.BOARD_SIZE - 2;
         this.forwards = this.player === Player.WHITE ? 1 : -1;
+        this.endRow = this.player === Player.WHITE ? GameSettings.BOARD_SIZE - 1 : 0;
     }
 
     public getAvailableMoves(board: Board) {
@@ -70,6 +77,11 @@ export default class Pawn extends Piece {
         }
         if (opposingPiece === undefined && newSquare.col !== originalPos.col) {
             board.setPiece(new Square(newSquare.row - this.forwards, newSquare.col), undefined);
+        }
+        if (newSquare.row === this.endRow) {
+            let whichPiece = [new Queen(this.player), new Bishop(this.player), new Rook(this.player), new Knight(this.player)];
+            let newPiece = whichPiece[Math.floor(Math.random() * whichPiece.length)];
+            board.setPiece(newSquare, newPiece);
         }
     }
 }
